@@ -13,22 +13,22 @@ function guardarEstadoTamagotchi(estado) {
 
 function cargarEstadoTamagotchi() {
   try {
-    if (window.name && window.name !== '') {
+    if (window.name && window.name !== "") {
       const estado = JSON.parse(window.name);
       return estado;
     }
   } catch (e) {
-   showThoughtBubble('Error al cargar estado:', e);
+    showThoughtBubble("Error al cargar estado:", e);
   }
-  
+
   return {
-    hambre: 100,
+    hambre: 0,
     energia: 100,
     diversion: 100,
     vida: 100,
     suciedad: 0,
-    estado: 'Feliz',
-    ultimaActualizacion: Date.now()
+    estado: "Feliz",
+    ultimaActualizacion: Date.now(),
   };
 }
 
@@ -50,20 +50,37 @@ class Tamagotchi {
   constructor() {
     // Cargar estado persistente
     const estadoGuardado = cargarEstadoTamagotchi();
-    
+
     // Calcular degradación basada en tiempo transcurrido
-    const tiempoTranscurrido = Math.floor((Date.now() - estadoGuardado.ultimaActualizacion) / 1000);
-    
+    const tiempoTranscurrido = Math.floor(
+      (Date.now() - estadoGuardado.ultimaActualizacion) / 1000
+    );
+
     // Aplicar degradación
-    this._hambre = Math.max(0, Math.min(100, estadoGuardado.hambre - tiempoTranscurrido));
-    this._energia = Math.max(0, Math.min(100, estadoGuardado.energia - tiempoTranscurrido));
-    this._diversion = Math.max(0, Math.min(100, estadoGuardado.diversion - tiempoTranscurrido));
-    this._vida = Math.max(0, Math.min(100, estadoGuardado.vida - tiempoTranscurrido));
-    this._suciedad = Math.max(0, Math.min(100, estadoGuardado.suciedad + tiempoTranscurrido));
-    
+    this._hambre = Math.max(
+      0,
+      Math.min(100, estadoGuardado.hambre - tiempoTranscurrido)
+    );
+    this._energia = Math.max(
+      0,
+      Math.min(100, estadoGuardado.energia - tiempoTranscurrido)
+    );
+    this._diversion = Math.max(
+      0,
+      Math.min(100, estadoGuardado.diversion - tiempoTranscurrido)
+    );
+    this._vida = Math.max(
+      0,
+      Math.min(100, estadoGuardado.vida - tiempoTranscurrido)
+    );
+    this._suciedad = Math.max(
+      0,
+      Math.min(100, estadoGuardado.suciedad + tiempoTranscurrido)
+    );
+
     // Guardar estado actualizado
     this.guardarEstado();
-    
+
     this.setState(this.obtenerEstadoPorNombre(estadoGuardado.estado));
     this.tipoComida = new TipoComida(this);
     this.tipoJuego = new TipoJuego(this);
@@ -79,22 +96,27 @@ class Tamagotchi {
       diversion: this._diversion,
       vida: this._vida,
       suciedad: this._suciedad,
-      estado: this.estado ? this.estado.constructor.name : 'Feliz',
-      ultimaActualizacion: Date.now()
+      estado: this.estado ? this.estado.constructor.name : "Feliz",
+      ultimaActualizacion: Date.now(),
     };
     guardarEstadoTamagotchi(estado);
     localStorage.setItem("tamagotchiData", JSON.stringify(estado));
-
   }
 
   obtenerEstadoPorNombre(nombreEstado) {
-    switch(nombreEstado) {
-      case 'Hambriento': return new Hambriento();
-      case 'Cansada': return new Cansada();
-      case 'Durmiendo': return new Durmiendo();
-      case 'Vida': return new Vida();
-      case 'Sucia': return new Sucia();
-      default: return new Feliz();
+    switch (nombreEstado) {
+      case "Hambriento":
+        return new Hambriento();
+      case "Cansada":
+        return new Cansada();
+      case "Durmiendo":
+        return new Durmiendo();
+      case "Vida":
+        return new Vida();
+      case "Sucia":
+        return new Sucia();
+      default:
+        return new Feliz();
     }
   }
 
@@ -195,13 +217,18 @@ class Tamagotchi {
       }
 
       // Cambios de estado basados en estadísticas
-      if (this.hambre <= 20 && !(this.estado instanceof Hambriento)) {
+      if (this.hambre >= 60 && !(this.estado instanceof Hambriento)) {
         this.setState(new Hambriento());
       } else if (this.energia <= 20 && !(this.estado instanceof Cansada)) {
         this.setState(new Cansada());
       } else if (this.suciedad >= 80 && !(this.estado instanceof Sucia)) {
         this.setState(new Sucia());
-      } else if (this.hambre > 60 && this.energia > 60 && this.suciedad < 30 && !(this.estado instanceof Feliz)) {
+      } else if (
+        this.hambre < 60 &&
+        this.energia > 60 &&
+        this.suciedad < 30 &&
+        !(this.estado instanceof Feliz)
+      ) {
         this.setState(new Feliz());
       }
     }, 1000);
@@ -219,7 +246,7 @@ class Comida {
   }
 
   aplicar(tamagotchi) {
-    tamagotchi.energia -= this.energia;
+    tamagotchi.energia += this.energia;
     tamagotchi.vida += this.vida;
     tamagotchi.hambre -= this.hambre;
     tamagotchi.diversion += this.felicidad;
@@ -395,8 +422,9 @@ class Cansada extends EstadoMascota {
   bañar() {
     showThoughtBubble("No quiero bañarme ahora...");
   }
+
   comoEstas() {
-   showThoughtBubble("¡Estoy cansado!");
+    showThoughtBubble("¡Estoy cansado!");
   }
 }
 
@@ -406,18 +434,18 @@ class Durmiendo extends EstadoMascota {
     return false;
   }
   jugar() {
-   showThoughtBubble("Está dormido, no puede jugar.");
+    showThoughtBubble("Está dormido, no puede jugar.");
   }
   dormir() {
     showThoughtBubble("¡Ya está dormido!");
   }
   bañar() {
-   showThoughtBubble("Está dormido, no se puede bañar.");
+    showThoughtBubble("Está dormido, no se puede bañar.");
   }
   setTamagotchi(tamagotchi) {
     this.tamagotchi = tamagotchi;
     setTimeout(() => {
-     showThoughtBubble("¡Despierta!");
+      showThoughtBubble("¡Despierta!");
       this.tamagotchi.setState(new Hambriento());
     }, 5000);
   }
@@ -453,10 +481,10 @@ class Vida extends EstadoMascota {
     showThoughtBubble("Sigamos jugando");
   }
   bañar() {
-   showThoughtBubble("No gracias");
+    showThoughtBubble("No gracias");
   }
   comoEstas() {
-   showThoughtBubble("¡Estoy con vida!");
+    showThoughtBubble("¡Estoy con vida!");
   }
 }
 
@@ -466,19 +494,19 @@ class Sucia extends EstadoMascota {
     return false;
   }
   jugar() {
-   showThoughtBubble("No puedo jugar así de cochino...");
+    showThoughtBubble("No puedo jugar así de cochino...");
   }
   dormir() {
     showThoughtBubble("No me gusta dormir estando tan sucio...");
   }
   bañar() {
-   showThoughtBubble("¡Al fin! ¡Qué alivio estar limpio otra vez!");
+    showThoughtBubble("¡Al fin! ¡Qué alivio estar limpio otra vez!");
     if (this.tamagotchi.suciedad <= 30) {
       this.tamagotchi.setState(new Feliz());
     }
   }
   comoEstas() {
-   showThoughtBubble("¡Estoy muy sucio! ¡Necesito un baño urgentemente!");
+    showThoughtBubble("¡Estoy muy sucio! ¡Necesito un baño urgentemente!");
   }
 }
 
@@ -486,7 +514,7 @@ class Sucia extends EstadoMascota {
 let miTamagotchi;
 
 // Limpiar intervalo al salir de la página
-window.addEventListener('beforeunload', function() {
+window.addEventListener("beforeunload", function () {
   if (window.tamagotchiInterval) {
     clearInterval(window.tamagotchiInterval);
   }
