@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego Tamagotchi</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Elemento de audio para la música de fondo -->
+    <audio id="bg-music" loop>
+      <source src="Imagenes/tama.mp3" type="audio/mp3" />
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- Controles de música -->
+    <div class="music-controls">
+      <button id="music-control-btn">
+        <img
+          src="Imagenes/play.png"
+          alt="Pausar/Reanudar"
+          id="pause-play-btn"
+          style="width: 50px; height: 50px"
+        />
+      </button>
+    </div>
+
+    <!-- Contenedor de la imagen y el juego -->
+    <div class="container">
+      <img
+        src="Imagenes/descargar (1).jpeg"
+        alt="Imagen del Juego"
+        id="background-img"
+      />
+
+      <!-- Contenedor para las barras -->
+      <div class="bars-container">
+        <!-- Contenedor para las 3 barras de la izquierda -->
+        <div class="left-bars">
+          <div class="bar" id="bar1">
+            <img
+              src="Imagenes/suciedad.gif"
+              alt="Icono Higiene"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="suciedad-bar">0%</div>
+          </div>
+          <div class="bar" id="bar2">
+            <img
+              src="Imagenes/energia.gif"
+              alt="Icono Sueño"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="energia-bar">100%</div>
+          </div>
+          <div class="bar" id="bar3">
+            <img
+              src="Imagenes/hambre.gif"
+              alt="Icono Comida"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="hambre-bar">100%</div>
+          </div>
+        </div>
+
+        <!-- Contenedor para las 2 barras de la derecha -->
+        <div class="right-bars">
+          <div class="bar" id="bar4">
+            <img src="Imagenes/vida.gif" alt="Icono Vida" class="bar-icon" />
+            <div class="bar-fill" id="vida-bar">100%</div>
+          </div>
+          <div class="bar" id="bar6">
+            <img
+              src="Imagenes/diversion.gif"
+              alt="Icono Felicidad"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="diversion-bar">100%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenedor para los botones -->
+      <div class="actions">
+        <div class="action-btn">
+          <a href="comer.html" onclick="feedPet()">
+            <img src="Imagenes/comer.gif" alt="Comer" class="action-img" />
+            <p>Comer</p>
+          </a>
+        </div>
+        <div class="action-btn">
+          <a href="dormir.html" onclick="sleepPet()">
+            <img src="Imagenes/dormir.gif" alt="Dormir" class="action-img" />
+            <p>Dormir</p>
+          </a>
+        </div>
+        <div class="action-btn">
+          <a href="jugare.html" onclick="playWithPet()">
+            <img src="Imagenes/jugar.gif" alt="Jugar" class="action-img" />
+            <p>Jugar</p>
+          </a>
+        </div>
+        <div class="action-btn">
+          <a href="banar.html" onclick="bathePet()">
+            <img src="Imagenes/bañar.gif" alt="Bañar" class="action-img" />
+            <p>Bañar</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- GIF de la mascota en el centro -->
+      <div class="pet-gif">
+        <img src="Imagenes/pinguino.gif" alt="Gif Mascota" />
+      </div>
+
+      <!-- Botón de salir (Home) -->
+      <div class="exit-btn">
+        <a href="#" onclick="reiniciarYSalir(); return false;">
+          <img src="Imagenes/home.png" alt="Salir" class="exit-img" />
+        </a>
+      </div>
+
+      <!-- Contenedor para la burbuja de pensamiento -->
+      <div class="thought-bubble" id="thought-bubble">
+        <p id="thought-message"></p>
+      </div>
+
+      <!-- Consola para logs -->
+      <div
+        id="console-output"
+        style="
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+          background: rgba(0, 0, 0, 0.8);
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+          max-width: 300px;
+          max-height: 100px;
+          overflow-y: auto;
+          font-size: 12px;
+          display: none;
+        "
+      ></div>
+
+      <!-- Estado del Tamagotchi -->
+      <div
+        id="estado-texto"
+        style="
+          position: absolute;
+          top: 60px;
+          left: 50%;
+          transform: translateX(-50%);
+          color: white;
+          font-family: 'Press Start 2P', cursive;
+          font-size: 16px;
+          background: rgba(0, 0, 0, 0.7);
+          padding: 10px;
+          border-radius: 10px;
+        "
+      >
+        Feliz
+      </div>
+    </div>
+    <script src="music-control.js"></script>
+    <script src="tamagotchi.js"></script>
+    <script>
+      if (typeof dormirBtn !== "undefined" && dormirBtn) {
+        dormirBtn.addEventListener("click", () => {
+          miTamagotchi.estado.dormir();
+          window.location.href = "dormir.html";
+        });
+      }
+      function reiniciarYSalir() {
+        localStorage.setItem("reiniciarEstado", "true");
+        window.location.href = "index.html";
+      }
+
+      window.onload = function () {
+        localStorage.removeItem("reiniciarEstado");
+        const thoughtBubble = document.getElementById("thought-bubble");
+        const thoughtMessage = document.getElementById("thought-message");
+        const nombreUsuario = localStorage.getItem("nombreUsuario");
+        const nombreMascota = localStorage.getItem("nombreTamagotchi");
+        if (nombreUsuario && nombreMascota) {
+          thoughtMessage.textContent = `Hola ${nombreUsuario}, soy ${nombreMascota}, espero que me cuides.`;
+          mostrarBurbuja(4000); 
+        }
+
+        const consejos = [
+          "Recuerda alimentarme para que esté feliz.",
+          "¡Jugar es divertido y me hace feliz!",
+          "No olvides bañarme cuando esté sucio.",
+          "Dormir me ayuda a recuperar energía.",
+          "Cuídame mucho para que viva feliz.",
+        ];
+        let indice = 0;
+
+        function lanzarConsejo() {
+          thoughtMessage.textContent = consejos[indice];
+          mostrarBurbuja(3000);
+          indice = (indice + 1) % consejos.length;
+        }
+
+        setTimeout(() => {
+          lanzarConsejo(); 
+          setInterval(lanzarConsejo, 10000);
+        }, 3000);
+
+        function mostrarBurbuja(duracionMs) {
+          thoughtBubble.classList.add("show");
+          setTimeout(() => thoughtBubble.classList.remove("show"), duracionMs);
+        }
+        function cargarEstadoTamagotchi() {
+          try {
+            if (localStorage.getItem("tamagotchiData")) {
+              return JSON.parse(localStorage.getItem("tamagotchiData"));
+            }
+            if (window.name && window.name !== "") {
+              return JSON.parse(window.name);
+            }
+          } catch (e) {
+            console.log("Error al cargar estado:", e);
+          }
+
+          return {
+            hambre: 100,
+            energia: 100,
+            diversion: 100,
+            vida: 100,
+            suciedad: 0,
+            estado: "Feliz",
+            ultimaActualizacion: Date.now(),
+          };
+        }
+      };
+    </script>
+  </body>
+</html>

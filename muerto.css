@@ -1,0 +1,94 @@
+/* Estilo general para el contenedor principal */
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #1e3c72, #2a5298); /* Fondo vibrante */
+    text-align: center;
+}
+
+/* Estilo para la imagen de fondo */
+#background-img {
+    width: 800px;
+    height: 950px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7); /* Sombra para resaltar la imagen */
+}
+
+/* Título en la parte superior */
+/* Estilo del título "GAME OVER" */
+.titulo-muerto {
+  position: absolute;
+  top: 1%;
+  width: 100%;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 80px;  /* Aumentamos el tamaño de la fuente */
+  color: rgb(248, 252, 255);
+  text-shadow: 2px 2px 6px rgb(0, 0, 0);
+  z-index: 3;
+}
+
+.titulo-muerto span {
+  display: block; /* Asegura que las palabras se apilen una debajo de la otra */
+  font-size: 100px; /* Tamaño más grande para que se vea prominente */
+}
+
+/* Contenedor para el GIF de la mascota */
+.pet-gif {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.pet-gif img {
+    width: 400px;  /* Controla el tamaño del GIF */
+    height: 400px;  /* Controla el tamaño del GIF */
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Estilo para el overlay de las opciones de reiniciar el juego */
+.overlay-box {
+    position: absolute;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Estilo del texto de la opción de reintentar */
+.reintentar-texto {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 19px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Estilo de los botones de Sí / No */
+.btn-jugar {
+    padding: 15px 20px;
+    margin: 0 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #000000;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-jugar:hover {
+    background-color: #000000;
+}

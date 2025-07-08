@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muerto - Juego Tamagotchi</title>
+    <link rel="stylesheet" href="muerto.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <img src="Imagenes/muerto.jpeg" alt="Fondo Muerto" id="background-img" />
+
+      <h1 class="titulo-muerto">
+        <span>GAME</span>
+        <span>OVER</span>
+      </h1>
+      <div class="pet-gif">
+        <img src="Imagenes/pinguino muerto.gif" alt="Gif Mascota Muerta" />
+
+        <div class="overlay-box">
+          <p class="reintentar-texto">¿Deseas volver a jugar?</p>
+          <button class="btn-jugar" onclick="volverAJugar()">Sí</button>
+          <button class="btn-jugar" onclick="cerrarPagina()">No</button>
+        </div>
+      </div>
+    </div>
+
+    <audio id="bg-music" autoplay loop>
+      <source src="Imagenes/muertomusica.mp3" type="audio/mp3" />
+      Tu navegador no soporta la etiqueta de audio.
+    </audio>
+
+    <script>
+      function volverAJugar() {
+          localStorage.setItem("reiniciarEstado", "true"); 
+        window.location.href = "index.html";
+      }
+
+      function cerrarPagina() {
+        window.location.href = "creditos.html";
+      }
+    </script>
+  </body>
+</html>

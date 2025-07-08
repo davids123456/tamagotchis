@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dormir - Juego Tamagotchi</title>
+    <link rel="stylesheet" href="dormir.css" />
+  </head>
+  <body>
+    <audio id="bg-music" loop>
+      <source src="Imagenes/tama.mp3" type="audio/mp3" />
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <div class="music-controls">
+      <button id="music-control-btn">
+        <img
+          src="Imagenes/play.png"
+          alt="Pausar/Reanudar"
+          id="pause-play-btn"
+          style="width: 50px; height: 50px"
+        />
+      </button>
+    </div>
+
+    <div class="container">
+      <img src="Imagenes/cama.jpeg" alt="Fondo Dormir" id="background-img" />
+
+      <div class="bars-container">
+        <div class="left-bars">
+          <div class="bar" id="bar1">
+            <img
+              src="Imagenes/suciedad.gif"
+              alt="Icono Higiene"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="suciedad-bar"></div>
+            <div class="percentage" id="suciedad-percentage"></div>
+          </div>
+          <div class="bar" id="bar2">
+            <img
+              src="Imagenes/energia.gif"
+              alt="Icono Sueño"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="energia-bar"></div>
+            <div class="percentage" id="energia-percentage"></div>
+          </div>
+          <div class="bar" id="bar3">
+            <img
+              src="Imagenes/hambre.gif"
+              alt="Icono Comida"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="hambre-bar"></div>
+            <div class="percentage" id="hambre-percentage"></div>
+          </div>
+        </div>
+
+        <div class="right-bars">
+          <div class="bar" id="bar4">
+            <img src="Imagenes/vida.gif" alt="Icono Vida" class="bar-icon" />
+            <div class="bar-fill" id="vida-bar"></div>
+            <div class="percentage" id="vida-percentage"></div>
+          </div>
+          <div class="bar" id="bar6">
+            <img
+              src="Imagenes/diversion.gif"
+              alt="Icono Felicidad"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="diversion-bar"></div>
+            <div class="percentage" id="diversion-percentage"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-gif">
+        <img src="Imagenes/durmiendo.gif" alt="Gif Mascota" />
+      </div>
+
+      <div class="back-btn-container">
+        <a href="jugar.html">
+          <img
+            src="Imagenes/retroceder.png"
+            alt="Volver a Jugar"
+            class="back-btn-img"
+          />
+        </a>
+      </div>
+
+      <div class="thought-bubble" id="thought-bubble">
+        <p id="thought-message">Estoy durmiendo...</p>
+      </div>
+    </div>
+
+    <script>
+      let tamagotchiData = JSON.parse(localStorage.getItem("tamagotchiData"));
+
+      if (!tamagotchiData) {
+        tamagotchiData = {
+          hambre: 100,
+          energia: 100,
+          diversion: 100,
+          vida: 100,
+          suciedad: 0,
+          estado: "Feliz",
+          ultimaActualizacion: Date.now(),
+        };
+      }
+
+      actualizarBarras();
+
+      const dormirInterval = setInterval(() => {
+        tamagotchiData.energia = Math.min(100, tamagotchiData.energia + 1);
+        tamagotchiData.vida = Math.min(100, tamagotchiData.vida + 1);
+        tamagotchiData.hambre = Math.min(100, tamagotchiData.hambre + 1);
+
+        tamagotchiData.ultimaActualizacion = Date.now();
+
+        localStorage.setItem("tamagotchiData", JSON.stringify(tamagotchiData));
+        window.name = JSON.stringify(tamagotchiData);
+
+        actualizarBarras();
+      }, 1000);
+
+      function actualizarBarras() {
+        document.getElementById("suciedad-bar").style.width =
+          tamagotchiData.suciedad + "%";
+        document.getElementById("energia-bar").style.width =
+          tamagotchiData.energia + "%";
+        document.getElementById("hambre-bar").style.width =
+          tamagotchiData.hambre + "%";
+        document.getElementById("vida-bar").style.width =
+          tamagotchiData.vida + "%";
+        document.getElementById("diversion-bar").style.width =
+          tamagotchiData.diversion + "%";
+
+        document.getElementById("suciedad-percentage").textContent =
+          tamagotchiData.suciedad + "%";
+        document.getElementById("energia-percentage").textContent =
+          tamagotchiData.energia + "%";
+        document.getElementById("hambre-percentage").textContent =
+          tamagotchiData.hambre + "%";
+        document.getElementById("vida-percentage").textContent =
+          tamagotchiData.vida + "%";
+        document.getElementById("diversion-percentage").textContent =
+          tamagotchiData.diversion + "%";
+      }
+
+      window.onload = () => showThoughtBubble("Estoy durmiendo…");
+
+      function showThoughtBubble(msg) {
+        const bubble = document.getElementById("thought-bubble");
+        const text = document.getElementById("thought-message");
+        text.textContent = msg;
+        bubble.classList.add("show");
+        setTimeout(() => bubble.classList.remove("show"), 6000);
+      }
+    </script>
+
+    <script src="music-control.js"></script>
+    <script src="tamagotchi-bars.js"></script>
+  </body>
+</html>

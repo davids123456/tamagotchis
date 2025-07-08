@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario Tamagotchi</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <audio id="bg-music" loop>
+      <source src="Imagenes/tama.mp3" type="audio/mp3" />
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <div class="music-controls">
+      <button id="music-control-btn">
+        <img
+          src="Imagenes/play.png"
+          alt="Pausar/Reanudar"
+          id="pause-play-btn"
+          style="width: 50px; height: 50px"
+        />
+      </button>
+    </div>
+
+    <div class="container">
+      <img src="Imagenes/descargar.jpeg" alt="Imagen Tamagotchi" />
+
+      <div class="form-container">
+        <div class="curved-text-container">
+          <span class="curved-text">Mi Tamagotchi</span>
+        </div>
+
+        <label for="usuario">Ingrese tu nombre:</label>
+        <input
+          type="text"
+          id="usuario"
+          name="usuario"
+          placeholder="Tu nombre"
+        />
+
+        <label for="nombre">Ingrese el nombre del Tamagotchi:</label>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          placeholder="Nombre del Tamagotchi"
+        />
+
+        <label for="fecha-nacimiento">Fecha de nacimiento:</label>
+        <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" />
+
+        <button class="jugar-btn" type="button" id="jugar-btn">Jugar</button>
+
+        <div id="validation-message" class="validation-message">
+          <img
+            src="Imagenes/icono-notificacion.png"
+            alt="Icono de advertencia"
+          />
+          Por favor ingrese un nombre y una fecha válida.
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("reiniciarEstado") === "true") {
+    window.name = "";                       // 🔥 borra el estado guardado
+    localStorage.removeItem("reiniciarEstado");
+  }
+
+  window.miTamagotchi = new Tamagotchi();   // barras al 100 %
+});
+
+      document.getElementById('jugar-btn').addEventListener('click', function() {
+        const nombreUsuario = document.getElementById('usuario').value;
+        const nombreTamagotchi = document.getElementById('nombre').value;
+
+        if (nombreUsuario && nombreTamagotchi) {
+          localStorage.setItem('nombreUsuario', nombreUsuario);
+          localStorage.setItem('nombreTamagotchi', nombreTamagotchi);
+
+          window.location.href = 'jugar.html';
+        } else {
+          document.getElementById('validation-message').style.display = 'block';
+        }
+          localStorage.setItem("reiniciarEstado", "true");
+
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,301 @@
+/* Estilo general para el contenedor principal */
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #1e3c72, #2a5298); /* Fondo vibrante */
+  text-align: center;
+}
+
+/* Estilo para la imagen de fondo */
+#background-img {
+  width: 800px;
+  height: 950px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7); /* Sombra para resaltar la imagen */
+}
+
+/* Estilo para el GIF de la mascota en el centro */
+.pet-gif {
+  position: absolute;
+  top: 50%; /* Coloca el GIF en la mitad vertical */
+  transform: translateY(60%); /* Mueve el GIF más hacia abajo */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.pet-gif img {
+  width: 250px; /* Aumenta el tamaño del GIF */
+  height: 250px; /* Aumenta el tamaño del GIF */
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
+}
+.music-controls {
+  position: absolute;
+  top: 30px;
+  right: 460px;
+  z-index: 2;
+}
+
+/* Estilo del botón de control de música */
+#music-control-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#music-control-btn img {
+  width: 50px; /* Ajusta el tamaño del ícono */
+  height: 50px;
+}
+
+.bars-container {
+  position: absolute;
+  top: 9%; /* Ajusta la posición vertical de las barras */
+  left: 50%;
+  transform: translateX(-50%); /* Asegura que las barras estén centradas */
+  display: flex;
+  justify-content: space-between; /* Separa las barras a la izquierda y a la derecha */
+  width: 35%; /* Aumenté el ancho para dar más espacio a los iconos */
+  height: auto;
+  overflow: visible; /* IMPORTANTE: Permite que los iconos se muestren fuera del contenedor */
+}
+
+/* Estilo de las barras a la izquierda y derecha */
+.left-bars,
+.right-bars {
+  display: flex;
+  flex-direction: column; /* Coloca las barras una debajo de la otra */
+  justify-content: space-between;
+  align-items: center;
+  width: 45%; /* 45% para que haya espacio entre las dos columnas de barras */
+  position: relative; /* Necesario para el posicionamiento de los iconos */
+}
+
+/* Estilo de cada barra */
+.bar {
+  position: relative;
+  width: 100%; /* Hace que las barras ocupen todo el ancho disponible */
+  height: 25px; /* Ajusta la altura de cada barra */
+  background: rgba(0, 0, 0, 0.3); /* Fondo oscuro para las barras */
+  border-radius: 15px;
+  overflow: visible; /* Permite que los iconos se muestren fuera de la barra */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6); /* Sombra para las barras */
+  margin-bottom: 10px; /* Aumenté el espacio para acomodar los iconos */
+  margin-top: 20px; /* Espacio superior para los iconos */
+}
+
+/* Estilo de las imágenes que estarán fuera de las barras */
+.bar-icon {
+  position: absolute;
+  top: 50%; /* Centrado verticalmente con la barra */
+  transform: translateY(-50%); /* Centra perfectamente el icono */
+  width: 40px; /* Tamaño de la imagen */
+  height: 40px;
+  z-index: 10; /* Asegura que las imágenes se muestren sobre todo */
+  border-radius: 50%; /* Hace los iconos circulares */
+  background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+  padding: 5px; /* Espaciado interno */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
+}
+
+/* Estilo para el relleno de las barras */
+.bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 15px;
+  transition: all 0.5s ease; /* Transición suave para cambios */
+  /* Color inicial verde (100%) */
+  background: linear-gradient(45deg, #4caf50, #8bc34a);
+}
+
+/* Sistema de colores según el porcentaje */
+.bar-fill.high {
+  background: linear-gradient(45deg, #4caf50, #8bc34a); /* Verde 100%-70% */
+}
+
+.bar-fill.medium-high {
+  background: linear-gradient(
+    45deg,
+    #ff9800,
+    #ffb74d
+  ); /* Naranja medio 70%-50% */
+}
+
+.bar-fill.medium-low {
+  background: linear-gradient(45deg, #ff5722, #ff7043); /* Naranja 50%-20% */
+}
+
+.bar-fill.low {
+  background: linear-gradient(45deg, #f44336, #e57373); /* Rojo 20%-0% */
+}
+
+/* Animación para el relleno de las barras */
+@keyframes fillBar {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* Aplicar animación al hover */
+.bar:hover .bar-fill {
+  animation: fillBar 2s ease-in-out;
+}
+
+/* Estilo para el porcentaje en el medio de la barra */
+.percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px; /* Reducí un poco el tamaño */
+  color: white;
+  font-weight: bold;
+  font-family: "Press Start 2P", cursive;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para mejor legibilidad */
+  z-index: 5;
+}
+
+/* Imágenes a la izquierda de las barras */
+.left-bars .bar-icon {
+  left: -60px; /* Más separación para que se vea claramente fuera */
+}
+
+/* Imágenes a la derecha de las barras */
+.right-bars .bar-icon {
+  right: -60px; /* Más separación para que se vea claramente fuera */
+}
+
+/* Responsive para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .bars-container {
+    width: 80%;
+  }
+
+  .bar-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .left-bars .bar-icon {
+    left: -45px;
+  }
+
+  .right-bars .bar-icon {
+    right: -45px;
+  }
+
+  .percentage {
+    font-size: 12px;
+  }
+}
+.back-btn-container {
+  position: absolute;
+  top: 20px; /* Ajusta la posición superior para que quede donde desees */
+  left: 1130px; /* Ajusta la posición izquierda para que quede en la esquina */
+  z-index: 10; /* Asegura que el botón esté encima de otros elementos */
+}
+
+/* Estilo del botón con la imagen de retroceso */
+.back-btn-img {
+  width: 50px; /* Tamaño del ícono (ajusta el tamaño que prefieras) */
+  height: 50px; /* Tamaño del ícono */
+  background-color: transparent; /* Fondo transparente */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Efectos de transición */
+}
+
+.back-btn-img:hover {
+  transform: scale(1.1); /* Efecto de ampliar cuando el mouse pasa por encima */
+  opacity: 0.8; /* Efecto de transparencia al hacer hover */
+}
+
+/* Estilo para la burbuja de pensamiento */
+
+.thought-bubble {
+  position: absolute;
+  top: 60%; /* Posición sobre el pingüino */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo con mayor opacidad */
+  padding: 10px 20px; /* Menos espacio dentro de la burbuja */
+  border-radius: 15px; /* Borde más suave */
+  border: 3px solid #333; /* Borde más oscuro */
+  font-family: "Montserrat", sans-serif; /* Fuente profesional y elegante */
+  color: #333;
+  font-size: 16px; /* Reducir tamaño de la fuente */
+  font-weight: 600; /* Mantener el texto claro y legible */
+  text-align: center;
+  width: 180px; /* Hacer la burbuja más pequeña */
+  z-index: 15; /* Por encima de todo */
+  display: none; /* Inicialmente oculta */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Triángulo hacia abajo que forma parte de la burbuja */
+.thought-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 12px solid rgba(255, 255, 255, 0.8); /* Transparente y suave */
+}
+
+/* Animación para mostrar la burbuja */
+.thought-bubble.show {
+  display: block;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+/* Animación de entrada y salida */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0px);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+/* Estilos adicionales para los botones de comida */
+.button-item {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button-item:active {
+  transform: scale(0.95);
+}

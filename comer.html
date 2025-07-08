@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comer - Juego Tamagotchi</title>
+    <link rel="stylesheet" href="comer.css" />
+  </head>
+  <body>
+    <!-- Elemento de audio para la música de fondo -->
+    <audio id="bg-music" loop>
+      <source src="Imagenes/tama.mp3" type="audio/mp3" />
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- Controles de música -->
+    <div class="music-controls">
+      <button id="music-control-btn">
+        <img
+          src="Imagenes/play.png"
+          alt="Pausar/Reanudar"
+          id="pause-play-btn"
+          style="width: 50px; height: 50px"
+        />
+      </button>
+    </div>
+
+    <div class="container">
+      <!-- Imagen de fondo para comer -->
+      <img src="Imagenes/cocina.jpeg" alt="Fondo Comer" id="background-img" />
+
+      <!-- Contenedor para las barras -->
+      <div class="bars-container">
+        <!-- Contenedor para las 3 barras de la izquierda -->
+        <div class="left-bars">
+          <div class="bar" id="bar1">
+            <img
+              src="Imagenes/suciedad.gif"
+              alt="Icono Higiene"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="suciedad-bar">0%</div>
+          </div>
+          <div class="bar" id="bar2">
+            <img
+              src="Imagenes/energia.gif"
+              alt="Icono Sueño"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="energia-bar">100%</div>
+          </div>
+          <div class="bar" id="bar3">
+            <img
+              src="Imagenes/hambre.gif"
+              alt="Icono Comida"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="hambre-bar">100%</div>
+          </div>
+        </div>
+
+        <!-- Contenedor para las 2 barras de la derecha -->
+        <div class="right-bars">
+          <div class="bar" id="bar4">
+            <img src="Imagenes/vida.gif" alt="Icono Vida" class="bar-icon" />
+            <div class="bar-fill" id="vida-bar">100%</div>
+          </div>
+          <div class="bar" id="bar6">
+            <img
+              src="Imagenes/diversion.gif"
+              alt="Icono Felicidad"
+              class="bar-icon"
+            />
+            <div class="bar-fill" id="diversion-bar">100%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones adicionales debajo del GIF -->
+      <div class="additional-buttons">
+        <div class="button-item" id="pescado-btn">
+          <img src="Imagenes/pes.gif" alt="Pescado" class="sub-btn-img" />
+          <p>Pescado</p>
+        </div>
+        <div class="button-item" id="calamar-btn">
+          <img src="Imagenes/calamar.gif" alt="Calamar" class="sub-btn-img" />
+          <p>Calamar</p>
+        </div>
+        <div class="button-item" id="krill-btn">
+          <img src="Imagenes/krill.gif" alt="Krill" class="sub-btn-img" />
+          <p>Krill</p>
+        </div>
+      </div>
+
+      <!-- GIF de la mascota en el centro -->
+      <div class="pet-gif">
+        <img src="Imagenes/comiendo.gif" alt="Gif Mascota" />
+      </div>
+
+      <div class="back-btn-container">
+        <a href="jugar.html">
+          <img
+            src="Imagenes/retroceder.png"
+            alt="Volver a Jugar"
+            class="back-btn-img"
+          />
+        </a>
+      </div>
+
+      <!-- Contenedor para la burbuja de pensamiento -->
+      <div class="thought-bubble" id="thought-bubble">
+        <p id="thought-message">¡Aliméntame!</p>
+      </div>
+
+      <!-- Consola para logs -->
+      <div
+        id="console-output"
+        style="
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+          background: rgba(0, 0, 0, 0.8);
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+          max-width: 300px;
+          max-height: 100px;
+          overflow-y: auto;
+          font-size: 12px;
+          display: block;
+        "
+      ></div>
+
+      <!-- Estado del Tamagotchi -->
+      <div
+        id="estado-texto"
+        style="
+          position: absolute;
+          top: 60px;
+          left: 50%;
+          transform: translateX(-50%);
+          color: white;
+          font-family: 'Press Start 2P', cursive;
+          font-size: 16px;
+          background: rgba(0, 0, 0, 0.7);
+          padding: 10px;
+          border-radius: 10px;
+        "
+      >
+        Feliz
+      </div>
+      <!-- Burbuja de pensamiento para el pingüino -->
+<div class="thought-bubble" id="thought-bubble">
+  <p id="thought-message">¡Aliméntame!</p>
+</div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="music-control.js"></script>
+    <script src="tamagotchi.js"></script>
+    <script>
+      window.onload = function () {
+        showThoughtBubble("aliméntame!");
+      };
+      function showThoughtBubble(message) {
+        const thoughtBubble = document.getElementById("thought-bubble");
+        const thoughtMessage = document.getElementById("thought-message");
+
+        thoughtMessage.textContent = message;
+        thoughtBubble.classList.add("show");
+        setTimeout(function () {
+          thoughtBubble.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

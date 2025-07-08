@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Créditos - Juego Tamagotchi</title>
+  <link rel="stylesheet" href="creditos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <video id="creditos-video" autoplay muted>
+      <source src="Imagenes/video.mp4" type="video/mp4" />
+      Tu navegador no soporta la etiqueta de video.
+    </video>
+
+    <audio id="bg-audio" autoplay>
+      <source src="Imagenes/creditos.mp3" type="audio/mp3" />
+      Tu navegador no soporta la etiqueta de audio.
+    </audio>
+  </div>
+
+  <script>
+    const video = document.getElementById("creditos-video");
+    const audio = document.getElementById("bg-audio");
+
+    video.addEventListener("ended", () => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+  </script>
+</body>
+</html>
